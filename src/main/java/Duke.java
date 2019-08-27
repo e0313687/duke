@@ -85,7 +85,7 @@ public class Duke {
             }
         }*/
 
-        //Level 4
+        //Level 4 & 5
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         Task[] userCommands = new Task[100];
@@ -103,10 +103,23 @@ public class Duke {
                 break;
             }
             if (firstWord.equals("done")) {
-                int done = Integer.parseInt(defaultTokenizer.nextToken());
-                userCommands[done-1].markAsDone();
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  [" + userCommands[done-1].getStatusIcon() + "] " + userCommands[done-1].getDescription());
+                if (defaultTokenizer.countTokens() > 0) {
+                    int done = Integer.parseInt(defaultTokenizer.nextToken());
+                    if (temp < 1) {
+                        System.out.println(" ☹ OOPS!!! You don't have any tasks in your list yet.");
+                    }
+                    else if (done > temp) {
+                        System.out.println(" ☹ OOPS!!! You only have " + temp + " tasks in your list.");
+                    }
+                    else {
+                        userCommands[done - 1].markAsDone();
+                        System.out.println("Nice! I've marked this task as done:");
+                        System.out.println("  [" + userCommands[done - 1].getStatusIcon() + "] " + userCommands[done - 1].getDescription());
+                    }
+                }
+                else {
+                    System.out.println(" ☹ OOPS!!! Please tell me which task you have completed.");
+                }
             }
             else if (firstWord.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
@@ -115,38 +128,51 @@ public class Duke {
                     System.out.println(i+1 + "." + userCommands[i].toString());
                 }
             }
-            else if (firstWord.equals("todo") && defaultTokenizer.countTokens() > 1){
-                String[] tempTodo = userCommand.split(" ", 2);
-                userCommands[temp] = new Todo(tempTodo[1]);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + userCommands[temp].toString());
-                temp++;
-                System.out.println("Now you have " + temp + " tasks in the list.");
+            else if (firstWord.equals("todo")){
+                if (defaultTokenizer.countTokens() > 0){
+                    String[] tempTodo = userCommand.split(" ", 2);
+                    userCommands[temp] = new Todo(tempTodo[1]);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + userCommands[temp].toString());
+                    temp++;
+                    System.out.println("Now you have " + temp + " tasks in the list.");
+                }
+                else {
+                    System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
+                }
             }
-            else if (firstWord.equals("deadline") && defaultTokenizer.countTokens() > 1){
-                String[] tempDeadline = userCommand.split("/");
-                String[] taskName = tempDeadline[0].split(" ", 2);
-                String[] byDate = tempDeadline[1].split(" ", 2);
-                userCommands[temp] = new Deadline(taskName[1], byDate[1]);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + userCommands[temp].toString());
-                temp++;
-                System.out.println("Now you have " + temp + " tasks in the list.");
+            else if (firstWord.equals("deadline")){
+                if (defaultTokenizer.countTokens() > 0) {
+                    String[] tempDeadline = userCommand.split("/");
+                    String[] taskName = tempDeadline[0].split(" ", 2);
+                    String[] byDate = tempDeadline[1].split(" ", 2);
+                    userCommands[temp] = new Deadline(taskName[1], byDate[1]);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + userCommands[temp].toString());
+                    temp++;
+                    System.out.println("Now you have " + temp + " tasks in the list.");
+                }
+                else {
+                    System.out.println(" ☹ OOPS!!! The description of a deadline cannot be empty.");
+                }
             }
-            else if (firstWord.equals("event") && defaultTokenizer.countTokens() > 1){
-                String[] tempEvent = userCommand.split("/");
-                String[] taskName = tempEvent[0].split(" ", 2);
-                String[] atPlace = tempEvent[1].split(" ", 2);
-                userCommands[temp] = new Event(taskName[1], atPlace[1]);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + userCommands[temp].toString());
-                temp++;
-                System.out.println("Now you have " + temp + " tasks in the list.");
+            else if (firstWord.equals("event")){
+                if (defaultTokenizer.countTokens() > 0) {
+                    String[] tempEvent = userCommand.split("/");
+                    String[] taskName = tempEvent[0].split(" ", 2);
+                    String[] atPlace = tempEvent[1].split(" ", 2);
+                    userCommands[temp] = new Event(taskName[1], atPlace[1]);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + userCommands[temp].toString());
+                    temp++;
+                    System.out.println("Now you have " + temp + " tasks in the list.");
+                }
+                else {
+                    System.out.println(" ☹ OOPS!!! The description of an event cannot be empty.");
+                }
             }
             else {
-                userCommands[temp] = new Task(userCommand);
-                temp++;
-                System.out.println("added: " + userCommand);
+                System.out.println(" ☹ OOPS!!! I don't understand.");
             }
         }
     }
