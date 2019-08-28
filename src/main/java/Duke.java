@@ -103,46 +103,42 @@ public class Duke {
                 break;
             }
             if (firstWord.equals("done")) {
-                if (defaultTokenizer.countTokens() > 0) {
+                //if (defaultTokenizer.countTokens() > 0) {
+                try {
                     int done = Integer.parseInt(defaultTokenizer.nextToken());
                     if (temp < 1) {
                         System.out.println(" ☹ OOPS!!! You don't have any tasks in your list yet.");
-                    }
-                    else if (done > temp) {
+                    } else if (done > temp) {
                         System.out.println(" ☹ OOPS!!! You only have " + temp + " tasks in your list.");
-                    }
-                    else {
+                    } else {
                         userCommands[done - 1].markAsDone();
                         System.out.println("Nice! I've marked this task as done:");
                         System.out.println("  [" + userCommands[done - 1].getStatusIcon() + "] " + userCommands[done - 1].getDescription());
                     }
-                }
-                else {
+                } catch (Exception e) {
                     System.out.println(" ☹ OOPS!!! Please tell me which task you have completed.");
                 }
-            }
-            else if (firstWord.equals("list")) {
+            } else if (firstWord.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < temp; i++) {
                     //System.out.println(i+1 + ".[" + userCommands[i].getStatusIcon() + "] " + userCommands[i].getDescription());
-                    System.out.println(i+1 + "." + userCommands[i].toString());
+                    System.out.println(i + 1 + "." + userCommands[i].toString());
                 }
-            }
-            else if (firstWord.equals("todo")){
-                if (defaultTokenizer.countTokens() > 0){
+            } else if (firstWord.equals("todo")) {
+                //if (defaultTokenizer.countTokens() > 0){
+                try {
                     String[] tempTodo = userCommand.split(" ", 2);
                     userCommands[temp] = new Todo(tempTodo[1]);
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + userCommands[temp].toString());
                     temp++;
                     System.out.println("Now you have " + temp + " tasks in the list.");
-                }
-                else {
+                } catch (Exception e) {
                     System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
                 }
-            }
-            else if (firstWord.equals("deadline")){
-                if (defaultTokenizer.countTokens() > 0) {
+            } else if (firstWord.equals("deadline")) {
+                //if (defaultTokenizer.countTokens() > 0) {
+                try {
                     String[] tempDeadline = userCommand.split("/");
                     String[] taskName = tempDeadline[0].split(" ", 2);
                     String[] byDate = tempDeadline[1].split(" ", 2);
@@ -151,13 +147,12 @@ public class Duke {
                     System.out.println("  " + userCommands[temp].toString());
                     temp++;
                     System.out.println("Now you have " + temp + " tasks in the list.");
-                }
-                else {
+                } catch (Exception e){
                     System.out.println(" ☹ OOPS!!! The description of a deadline cannot be empty.");
                 }
-            }
-            else if (firstWord.equals("event")){
-                if (defaultTokenizer.countTokens() > 0) {
+            } else if (firstWord.equals("event")) {
+                //if (defaultTokenizer.countTokens() > 0) {
+                try {
                     String[] tempEvent = userCommand.split("/");
                     String[] taskName = tempEvent[0].split(" ", 2);
                     String[] atPlace = tempEvent[1].split(" ", 2);
@@ -166,12 +161,10 @@ public class Duke {
                     System.out.println("  " + userCommands[temp].toString());
                     temp++;
                     System.out.println("Now you have " + temp + " tasks in the list.");
-                }
-                else {
+                } catch (Exception e) {
                     System.out.println(" ☹ OOPS!!! The description of an event cannot be empty.");
                 }
-            }
-            else {
+            } else {
                 System.out.println(" ☹ OOPS!!! I don't understand.");
             }
         }
