@@ -1,8 +1,11 @@
+import java.util.Date;
+
 public class Task {
     protected String description;
     protected boolean isDone;
     protected String type;
     protected String time;
+    //protected Date time;
 
     public Task(String description, String type) {
         this.description = description;
@@ -12,6 +15,10 @@ public class Task {
 
     public void setType(String type){
         this.type = type;
+    }
+
+    public void setTime(String time){
+        this.time = time;
     }
 
     public String getStatusIcon() {

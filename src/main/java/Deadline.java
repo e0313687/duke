@@ -1,4 +1,6 @@
- public class Deadline extends Task {
+import java.util.Date;
+
+public class Deadline extends Task {
 
     public String getBy() {
         return this.time;

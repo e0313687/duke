@@ -1,5 +1,7 @@
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.*;
 
@@ -87,7 +89,7 @@ public class Duke {
             }
         }*/
 
-        //Level 4 & 5 & 7
+        //Level 4 & 5 & 7 & 8
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
 
@@ -122,7 +124,6 @@ public class Duke {
                 case "E": {
                     Task command = new Event(description, lineParts[3]);
                     command.isDone = done.equals("1");
-
                     userCommands[temp] = command;
                     temp++;
                     break;
@@ -153,7 +154,7 @@ public class Duke {
                 out.close();
                 break;
             }
-            
+
             if (firstWord.equals("done")) {
                 try {
                     int done = Integer.parseInt(defaultTokenizer.nextToken());
@@ -191,11 +192,13 @@ public class Duke {
                 try {
                     String[] tempDeadline = userCommand.split("/");
                     String[] taskName = tempDeadline[0].split(" ", 2);
-                    String[] byDate = tempDeadline[1].split(" ", 2);
-                    userCommands[temp] = new Deadline(taskName[1], byDate[1]);
+                    String[] byDate = tempDeadline[1].split(" ", 3);
+                    String fullDate = byDate[1] + " " + byDate[2];
+                    Date date = new SimpleDateFormat("yyyyMMdd HHmm").parse(fullDate);
+                    userCommands[temp] = new Deadline(taskName[1], fullDate);
                     userCommands[temp].setType("D");
                     System.out.println("Got it. I've added this task:");
-                    System.out.println("  " + userCommands[temp].toString());
+                    System.out.println("  " + userCommands[temp].toString() + " (by: " + date + ")");
                     temp++;
                     System.out.println("Now you have " + temp + " tasks in the list.");
                 } catch (Exception e){
@@ -205,11 +208,13 @@ public class Duke {
                 try {
                     String[] tempEvent = userCommand.split("/");
                     String[] taskName = tempEvent[0].split(" ", 2);
-                    String[] atPlace = tempEvent[1].split(" ", 2);
-                    userCommands[temp] = new Event(taskName[1], atPlace[1]);
+                    String[] atTime = tempEvent[1].split(" ", 3);
+                    String fullTime = atTime[1] + " " + atTime[2];
+                    Date date = new SimpleDateFormat("yyyyMMdd HHmm").parse(fullTime);
+                    userCommands[temp] = new Event(taskName[1], fullTime);
                     userCommands[temp].setType("E");
                     System.out.println("Got it. I've added this task:");
-                    System.out.println("  " + userCommands[temp].toString());
+                    System.out.println("  " + userCommands[temp].toString() + " (at: " + date + ")");
                     temp++;
                     System.out.println("Now you have " + temp + " tasks in the list.");
                 } catch (Exception e) {
