@@ -7,6 +7,7 @@ public class Task {
     public Task(String description, String type) {
         this.description = description;
         this.isDone = false;
+        this.type = type;
     }
 
     public void setType(String type){
@@ -38,7 +39,7 @@ public class Task {
     }
 
     public String toString(){
-        return "[" + this.getStatusIcon() + "] " + this.getDescription() + " ";
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " + this.getDescription() + " ";
     }
 }
 

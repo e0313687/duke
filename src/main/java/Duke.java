@@ -108,22 +108,23 @@ public class Duke {
                 case "T": {
                     Task command = new Task(description, "T");
                     command.isDone = done.equals("1");
-                    temp++;
                     userCommands[temp] = command;
+                    temp++;
                     break;
                 }
                 case "D": {
                     Task command = new Deadline(description, lineParts[3]);
                     command.isDone = done.equals("1");
-                    temp++;
                     userCommands[temp] = command;
+                    temp++;
                     break;
                 }
                 case "E": {
                     Task command = new Event(description, lineParts[3]);
                     command.isDone = done.equals("1");
-                    temp++;
+
                     userCommands[temp] = command;
+                    temp++;
                     break;
                 }
             }
@@ -140,7 +141,6 @@ public class Duke {
                 new FileWriter("duke.txt").close();
                 for(int i = 0; i < temp && i < 100; i++) {
                     String done = userCommands[i].getDone() ? "1" : "0";
-                    System.out.println(userCommands[i].getType());
                     if (userCommands[i].getType().equals("T")) {
                         out.write("T|" + done + "|" + userCommands[i].getDescription() + "\n");
                     } else if (userCommands[i].getType().equals("D")) {
@@ -153,6 +153,7 @@ public class Duke {
                 out.close();
                 break;
             }
+            
             if (firstWord.equals("done")) {
                 try {
                     int done = Integer.parseInt(defaultTokenizer.nextToken());
@@ -171,7 +172,8 @@ public class Duke {
             } else if (firstWord.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < temp; i++) {
-                    System.out.println(i + 1 + "." + userCommands[i].toString());
+                    System.out.println(i + 1 + ". " + userCommands[i].toString());
+
                 }
             } else if (firstWord.equals("todo")) {
                 try {
