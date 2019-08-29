@@ -1,8 +1,10 @@
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.io.*;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //Level 0
         /*String logo = " ____        _        \n"
@@ -85,12 +87,47 @@ public class Duke {
             }
         }*/
 
-        //Level 4 & 5
+        //Level 4 & 5 & 7
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        Task[] userCommands = new Task[100];
 
+        Path file = Paths.get("duke.txt");
+        FileWriter out = new FileWriter(String.valueOf(file), true);
+
+        Task[] userCommands = new Task[100];
         int temp = 0;
+
+        Scanner sc = new Scanner(file);
+        while(sc.hasNext()) {
+            String nextline = sc.nextLine();
+            String[] lineParts = nextline.split("\\|");
+            String type = lineParts[0];
+            String done = lineParts[1];
+            String description = lineParts[2];
+            switch (type) {
+                case "T": {
+                    Task command = new Task(description, "T");
+                    command.isDone = done.equals("1");
+                    temp++;
+                    userCommands[temp] = command;
+                    break;
+                }
+                case "D": {
+                    Task command = new Deadline(description, lineParts[3]);
+                    command.isDone = done.equals("1");
+                    temp++;
+                    userCommands[temp] = command;
+                    break;
+                }
+                case "E": {
+                    Task command = new Event(description, lineParts[3]);
+                    command.isDone = done.equals("1");
+                    temp++;
+                    userCommands[temp] = command;
+                    break;
+                }
+            }
+        }
 
         while(true) {
             Scanner command = new Scanner(System.in);
@@ -100,10 +137,23 @@ public class Duke {
 
             if (userCommand.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
+                new FileWriter("duke.txt").close();
+                for(int i = 0; i < temp && i < 100; i++) {
+                    String done = userCommands[i].getDone() ? "1" : "0";
+                    System.out.println(userCommands[i].getType());
+                    if (userCommands[i].getType().equals("T")) {
+                        out.write("T|" + done + "|" + userCommands[i].getDescription() + "\n");
+                    } else if (userCommands[i].getType().equals("D")) {
+                        out.write("D|" + done + "|" + userCommands[i].getDescription() + "|" + userCommands[i].getTime() + "\n");
+                    } else if (userCommands[i].getType().equals("E")) {
+                        out.write("E|" + done + "|" + userCommands[i].getDescription() + "|" + userCommands[i].getTime() + "\n");
+                    }
+                }
+                out.flush();
+                out.close();
                 break;
             }
             if (firstWord.equals("done")) {
-                //if (defaultTokenizer.countTokens() > 0) {
                 try {
                     int done = Integer.parseInt(defaultTokenizer.nextToken());
                     if (temp < 1) {
@@ -121,14 +171,13 @@ public class Duke {
             } else if (firstWord.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < temp; i++) {
-                    //System.out.println(i+1 + ".[" + userCommands[i].getStatusIcon() + "] " + userCommands[i].getDescription());
                     System.out.println(i + 1 + "." + userCommands[i].toString());
                 }
             } else if (firstWord.equals("todo")) {
-                //if (defaultTokenizer.countTokens() > 0){
                 try {
                     String[] tempTodo = userCommand.split(" ", 2);
                     userCommands[temp] = new Todo(tempTodo[1]);
+                    userCommands[temp].setType("T");
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + userCommands[temp].toString());
                     temp++;
@@ -137,12 +186,12 @@ public class Duke {
                     System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
                 }
             } else if (firstWord.equals("deadline")) {
-                //if (defaultTokenizer.countTokens() > 0) {
                 try {
                     String[] tempDeadline = userCommand.split("/");
                     String[] taskName = tempDeadline[0].split(" ", 2);
                     String[] byDate = tempDeadline[1].split(" ", 2);
                     userCommands[temp] = new Deadline(taskName[1], byDate[1]);
+                    userCommands[temp].setType("D");
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + userCommands[temp].toString());
                     temp++;
@@ -151,12 +200,12 @@ public class Duke {
                     System.out.println(" ☹ OOPS!!! The description of a deadline cannot be empty.");
                 }
             } else if (firstWord.equals("event")) {
-                //if (defaultTokenizer.countTokens() > 0) {
                 try {
                     String[] tempEvent = userCommand.split("/");
                     String[] taskName = tempEvent[0].split(" ", 2);
                     String[] atPlace = tempEvent[1].split(" ", 2);
                     userCommands[temp] = new Event(taskName[1], atPlace[1]);
+                    userCommands[temp].setType("E");
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + userCommands[temp].toString());
                     temp++;
