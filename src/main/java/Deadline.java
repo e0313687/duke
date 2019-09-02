@@ -14,4 +14,9 @@ public class Deadline extends Task {
         super(description, "D");
         this.time = time;
     }
+
+    @Override
+    public String toString(){
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " + this.getDescription() + " (by: " + this.getTime() + ")";
+    }
 }

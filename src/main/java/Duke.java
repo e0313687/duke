@@ -13,7 +13,6 @@ public class Duke {
         FileWriter out = new FileWriter(String.valueOf(file), true);
 
         ArrayList<Task> userCommands = new ArrayList<Task>();
-        int temp = 0;
 
         Scanner sc = new Scanner(file);
         while(sc.hasNext()) {
@@ -27,21 +26,18 @@ public class Duke {
                     Task command = new Task(description, "T");
                     command.isDone = done.equals("1");
                     userCommands.add(command);
-                    temp++;
                     break;
                 }
                 case "D": {
                     Task command = new Deadline(description, lineParts[3]);
                     command.isDone = done.equals("1");
                     userCommands.add(command);
-                    temp++;
                     break;
                 }
                 case "E": {
                     Task command = new Event(description, lineParts[3]);
                     command.isDone = done.equals("1");
                     userCommands.add(command);
-                    temp++;
                     break;
                 }
             }
@@ -79,9 +75,9 @@ public class Duke {
                     } else if (done > userCommands.size()) {
                         System.out.println(" ☹ OOPS!!! You only have " + userCommands.size() + " tasks in your list.");
                     } else {
-                        userCommands.get(done-1).markAsDone();
+                        userCommands.get(done -1).markAsDone();
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println("  [" + userCommands.get(done-1).getStatusIcon() + "] " + userCommands.get(done - 1).getDescription());
+                        System.out.println("  [" + userCommands.get(done-1).getStatusIcon() + "] " + userCommands.get(done-1).getDescription());
                     }
                 } catch (Exception e) {
                     System.out.println(" ☹ OOPS!!! Please tell me which task you have completed.");
@@ -146,6 +142,18 @@ public class Duke {
                     System.out.println("Now you have " + userCommands.size() + " tasks in the list.");
                 } catch (Exception e) {
                     System.out.println(" ☹ OOPS!!! Cannot delete non-existent task!");
+                }
+            } else if (firstWord.equals("find")) {
+                try {
+                    String find = defaultTokenizer.nextToken();
+                    int temp = 0;
+                    for (Task i : userCommands) {
+                        if (i.getDescription().contains(find)){
+                            System.out.println(temp+1 + ". " + i.toString());
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println(" ☹ OOPS!!! We ran to an error!");
                 }
             }
             else {

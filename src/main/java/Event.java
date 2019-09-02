@@ -14,4 +14,9 @@ public class Event extends Task {
         super(description, "E");
         this.time = time;
     }
+
+    @Override
+    public String toString(){
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " + this.getDescription() + " (at: " + this.getTime() + ")";
+    }
 }
