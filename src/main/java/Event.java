@@ -1,13 +1,12 @@
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Event extends Task {
+    private LocalDateTime startDate;
+    private String time;
 
-    public String getAt() {
-        return this.time;
-    }
-
-    public void setAt(String at) {
-        this.time = time;
+    public Event (String description, LocalDateTime startDate) {
+        super(description, "E");
+        this.startDate = startDate;
     }
 
     public Event (String description, String time) {
@@ -17,6 +16,10 @@ public class Event extends Task {
 
     @Override
     public String toString(){
-        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " + this.getDescription() + " (at: " + this.getTime() + ")";
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " + this.getDescription() + " (at: " + (startDate == null ? time : startDate.toString()) + ")";
+    }
+
+    public String getTime() {
+        return startDate == null ? time : startDate.toString();
     }
 }

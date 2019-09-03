@@ -1,13 +1,12 @@
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Deadline extends Task {
+    private LocalDateTime startDate;
+    private String time;
 
-    public String getBy() {
-        return this.time;
-    }
-
-    public void setBy(String by) {
-        this.time = time;
+    public Deadline (String description, LocalDateTime startDate) {
+        super(description, "D");
+        this.startDate = startDate;
     }
 
     public Deadline (String description, String time) {
@@ -17,6 +16,10 @@ public class Deadline extends Task {
 
     @Override
     public String toString(){
-        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " + this.getDescription() + " (by: " + this.getTime() + ")";
+        return "[" + this.getType() + "][" + this.getStatusIcon() + "] " + this.getDescription() + " (by: " + (startDate == null ? time : startDate.toString()) + ")";
+    }
+
+    public String getTime() {
+        return startDate == null ? time : startDate.toString();
     }
 }

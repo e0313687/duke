@@ -5,20 +5,11 @@ public class Task {
     protected boolean isDone;
     protected String type;
     protected String time;
-    //protected Date time;
 
     public Task(String description, String type) {
         this.description = description;
         this.isDone = false;
         this.type = type;
-    }
-
-    public void setType(String type){
-        this.type = type;
-    }
-
-    public void setTime(String time){
-        this.time = time;
     }
 
     public String getStatusIcon() {
