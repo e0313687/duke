@@ -6,6 +6,9 @@ import duke.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * A command class to find a task given keyword.
+ */
 public class FindCommand extends Command {
     private String word;
 

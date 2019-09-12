@@ -6,9 +6,18 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
 
-import java.lang.reflect.Member;
-
+/**
+ * The ParserStorage class deals with storage related operations.
+ */
 public class ParserStorage {
+
+    /**
+     * This parses a task from String format stored in the files back to the task.
+     *
+     * @param line The String description of a task.
+     * @return The corresponding task object.
+     * @throws DukeException If the task cannot be converted.
+     */
     public static Task createTaskFromStorage(String line) throws DukeException {
         String[] taskParts = line.split("\\|");
         try {
@@ -38,6 +47,13 @@ public class ParserStorage {
         }
     }
 
+    /**
+     * This parses a task from task to String format in order to be stored.
+     *
+     * @param task The task
+     * @return The corresponding String format of the task object.
+     * @throws DukeException If the task cannot be converted.
+     */
     public static String toStorageString(Task task) throws DukeException {
         if (task instanceof Deadline) {
             return "D | " + task.getDone() + " | " + task.getDescription() + ((Deadline) task).getTime();

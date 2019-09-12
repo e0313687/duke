@@ -11,7 +11,18 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAdjusters;
 
+/**
+ * The ParserTime class deals with time related operations.
+ */
 class ParserTime {
+
+    /**
+     * This parses a Stirng into a LocalDateTime object.
+     *
+     * @param line The input String of the date.
+     * @return The date and time, with missing information padded with current time information.
+     * @throws DukeException If the format is invalid.
+     */
     static LocalDateTime parseStringToDate(String line) throws DukeException {
         String[] timePatterns = { "dd/MM/yy", "yyyy-MM-dd'T'HH:mm[:ss.n]", "dd/MM/yyyy HHmm", "dd/MM/yy HHmm", "['next ']['this ']E", "['this ']['next ']EEEE", "HHmm", };
         TimePatternType[] timeTypes = {TimePatternType.DATE, TimePatternType.DATE_TIME,  TimePatternType.DATE_TIME, TimePatternType.DATE_TIME, TimePatternType.DAY_OF_WEEK, TimePatternType.DAY_OF_WEEK,TimePatternType.TIME};

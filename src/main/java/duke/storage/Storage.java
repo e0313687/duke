@@ -9,18 +9,28 @@ import duke.parser.ParserStorage;
 import duke.tasks.Task;
 import duke.ui.Ui;
 
+/**
+ * The Storage class manages the storage of duke data in local storage.
+ */
 public class Storage {
-    //deals with loading tasks from the file and saving tasks in the file
     private String filePath;
     private ArrayList<Task> userCommands;
     private Ui ui;
 
+    /**
+     * This constructs a Storage object that contains tasks and storage related operations.
+     * @param filePath The filepath to the txt file.
+     * @param ui The user interface displaying tasks on the list.
+     */
     public Storage(String filePath, Ui ui){
         this.filePath = filePath;
         this.ui = ui;
         load();
     }
 
+    /**
+     * This reads tasks from filepaths, or creates empty tasks if file cannot be read.
+     */
     private void load(){
         ArrayList<Task> newTasks = new ArrayList<>();
         try {
@@ -38,6 +48,9 @@ public class Storage {
         userCommands = newTasks;
     }
 
+    /**
+     * This writes the tasks into a file of the given filepath.
+     */
     public void write() {
         try {
             FileWriter writer = new FileWriter(filePath);
