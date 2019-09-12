@@ -1,12 +1,11 @@
-public class ParserUtil {
-    static Todo createTodo(String userInput) throws DukeException {
-        String description = userInput.substring("todo".length()).strip();
-        if (description.isEmpty()) {
-            System.out.println("Ah oh, the description cannot be empty.");
-        }
-        return new Todo(description);
-    }
+package duke.parser;
 
+import duke.exception.DukeException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Todo;
+
+public class ParserUtil {
     static Deadline createDeadline(String userInput) throws DukeException {
         String[] deadlineDetails = userInput.substring("deadline".length()).strip().split("/by");
         if ((deadlineDetails.length != 2) || (deadlineDetails[1] == null)) {
@@ -35,6 +34,14 @@ public class ParserUtil {
         } catch (DukeException e) {
             return new Event(eventDetails[0].strip(), eventDetails[1].strip());
         }
+    }
+
+    static Todo createTodo(String userInput) throws DukeException {
+        String description = userInput.substring("todo".length()).strip();
+        if (description.isEmpty()) {
+            System.out.println("Ah oh, the description cannot be empty.");
+        }
+        return new Todo(description);
     }
 
     static int getIndex (String userInput) throws DukeException {

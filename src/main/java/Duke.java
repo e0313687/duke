@@ -1,3 +1,10 @@
+import duke.command.Command;
+import duke.command.ExitCommand;
+import duke.exception.DukeException;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.ui.Ui;
+
 public class Duke {
     private static final String FILE_PATH = "duke.txt";
 

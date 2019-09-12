@@ -1,7 +1,15 @@
+package duke.parser;
+
+import duke.exception.DukeException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+
 import java.lang.reflect.Member;
 
 public class ParserStorage {
-    public static Task createTaskFromStorage(String line) throws DukeException{
+    public static Task createTaskFromStorage(String line) throws DukeException {
         String[] taskParts = line.split("\\|");
         try {
             String type = taskParts[0].strip();

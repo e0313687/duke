@@ -1,6 +1,13 @@
+package duke.storage;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
+
+import duke.exception.DukeException;
+import duke.parser.ParserStorage;
+import duke.tasks.Task;
+import duke.ui.Ui;
 
 public class Storage {
     //deals with loading tasks from the file and saving tasks in the file
