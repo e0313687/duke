@@ -1,5 +1,8 @@
 package duke.parser;
 
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Todo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
